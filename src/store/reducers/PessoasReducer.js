@@ -22,6 +22,23 @@ const pessoasReducer = (state = INITIAL_STATE, action) => {
             isUpdate: true
         }
     }
+
+    if (action.type === "REGISTER_PESSOA"){
+        return {
+            ...state,
+            pessoa: {},
+            loading: false,
+            isUpdate: false,
+        }
+    }
+
+    if (action.type === "LIMPA_PESSOA"){
+        return {
+            ...state,
+            pessoa: {},
+            loading: true,
+        }
+    }
     return state
 };
 

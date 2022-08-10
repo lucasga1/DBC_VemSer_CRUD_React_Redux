@@ -4,4 +4,8 @@ const apiDbc = axios.create({
     baseURL: "https://dbc-pessoa-api.herokuapp.com"
 })
 
-export default apiDbc;
+const apiCep = axios.create({
+    baseURL: "https://viacep.com.br/ws"
+})
+
+export { apiCep, apiDbc };

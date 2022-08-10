@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import apiDbc from '../../api';
+import { apiDbc } from '../../api';
 
-export const handleLogin = async (values, dispatch, navigate) => {
+export const handleLogin = async (values, dispatch) => {
     try {
         const { data } = await apiDbc.post('/auth', values)
         localStorage.setItem('token', data)
@@ -10,10 +10,20 @@ export const handleLogin = async (values, dispatch, navigate) => {
             token: data
         }
         dispatch(logar)
-        navigate('/pessoa')
+        window.location.href = '/pessoa';
     } catch (error) {
         console.log(error)
     }
+}
+
+export const handleLogout = (dispatch) => {
+    localStorage.removeItem('token')
+    apiDbc.defaults.headers.common['Authorization'] = undefined;
+    const logout = {
+        type: 'SET_LOGOUT'
+    }
+    dispatch(logout)
+    window.location.href = '/login';
 }
 
 export const handleCreateUser = async (value) => {
@@ -25,15 +35,12 @@ export const handleCreateUser = async (value) => {
     }
 }
 
-export const criarNovoLogin = (navigate, dispatch) => {
+export const criarNovoLogin = (dispatch) => {
     const criarLogin = {
         type: "SET_CRIA_LOGIN",
-        isLogged: true,
-        isLoading: false,
-        isLogin: false
     }
     dispatch(criarLogin)
-    navigate('/criar-login')
+    window.location.href = '/criar-login';
 }
 
 export const isAuth = (dispatch) => {

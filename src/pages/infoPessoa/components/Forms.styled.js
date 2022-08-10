@@ -3,8 +3,13 @@ import styled from "styled-components";
 export const Container = styled.div`
     background-color: #eeeeee;
     width: 100vw;
-    height: 100vh;
     position: absolute;
+
+    & h1{
+        text-align: center;
+        font-size: 24px;
+        margin-top: 30px;
+    }
 
     & form {
         display: grid;        
@@ -35,6 +40,21 @@ export const Container = styled.div`
         }
 
         & input:focus {
+            outline: none;
+            background-color: #E5E5E5;
+        }
+
+        & select {
+            margin: 0 25px;
+            padding-left: 15px;
+            height: 35px;
+            border:  1.5px solid #DFE0EB;
+            border-radius: 8px;
+            box-shadow: 5px 5px 5px 0px #d6d6d637,
+            5px 5px 5px 0px #cccccc52;
+        }
+
+        & select:focus {
             outline: none;
             background-color: #E5E5E5;
         }

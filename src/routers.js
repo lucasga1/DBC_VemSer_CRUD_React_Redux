@@ -7,17 +7,25 @@ import Dashboard from './pages/dashboard/Dashboard';
 import Login from './pages/login/Login';
 import CreatePessoa from './pages/pessoa/components/CreatePessoa';
 import Pessoa from './pages/pessoa/Pessoa';
+import InfoPessoa from './pages/infoPessoa/InfoPessoa';
+import FormCriaEndereco from './pages/infoPessoa/components/FormCriaEndereco';
+import FormCriaContato from './pages/infoPessoa/components/FormCriaContato';
+import NotFound from './pages/notfound/NotFound';
 
 function Routers({ auth, dispatch }) {
 
   useEffect(() => {
-    isAuth(dispatch)
+    const token = localStorage.getItem('token')
+    if (token) {
+      isAuth(dispatch)
+    } else {
+      dispatch({type: 'LOADING_FALSE'})
+    }
   }, [])
 
   if (auth.isLoading) {
     return (<h1>Carregando</h1>)
   }
-
   return (
     <BrowserRouter>
       <Headers />
@@ -31,8 +39,13 @@ function Routers({ auth, dispatch }) {
             <Route path='/pessoa' element={<Pessoa />} />
             <Route path='/criar-pessoa' element={<CreatePessoa />} />
             <Route path='/editar-pessoa/:idPessoa' element={<CreatePessoa />} />
+            <Route path='/info-pessoa/:idPessoa' element={<InfoPessoa />} />
+            <Route path='/criar-endereco/:idPessoa' element={<FormCriaEndereco />} />
+            <Route path='/editar-endereco/:idPessoa/:idEndereco' element={<FormCriaEndereco />} />
+            <Route path='/criar-contato/:id' element={<FormCriaContato />} />
           </>)
         }
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter >
   )

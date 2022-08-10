@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import moment from "moment";
 import * as S from "./Pessoa.styled";
 
-function Pessoa({ pessoas, dispatch }) {
+function Pessoa({ pessoas, dispatch, loading }) {
 
   const navigate = useNavigate()
 
@@ -13,20 +13,39 @@ function Pessoa({ pessoas, dispatch }) {
     getPessoas(dispatch)
   }
 
-  const deletaPessoa = ({ idPessoa, dispatch }) => {
+  useEffect(() => {
+        setup()
+  }, [])
+  
+  useEffect(() => {
+    return () => {
+      dispatch({ type: 'LIMPA_PESSOA' })
+    }
+  }, [])
+  
+  const deletePessoa = (idPessoa) => {
     handleDelete(idPessoa)
     getPessoas(dispatch)
   }
-  useEffect(() => {
-    setup()
-  }, [])
-
+  
   const navegarFormEditPessoa = (idPessoa) => {
     navigate(`/editar-pessoa/${idPessoa}`)
   }
 
   const navegarFormCriaPessoa = () => {
     navigate(`/criar-pessoa`);
+  }
+  
+  const navegarFormContato = (idPessoa) => {
+    navigate(`/criar-contato/${idPessoa}`)
+  }
+  
+  const navegarFormEndereco = (idPessoa) => {
+    navigate(`/criar-endereco/${idPessoa}`)
+  }
+
+  if (loading) {
+    return (<h1>Loading</h1>)
   }
 
   return (
@@ -40,7 +59,7 @@ function Pessoa({ pessoas, dispatch }) {
           {pessoas.map(({ nome, dataNascimento, cpf, email, idPessoa }) => (
             <S.Pessoas key={idPessoa}>
               <div>
-                <div onClick={() => console.log(`Clicou no usuario: ${nome}`)}>
+                <div onClick={() => navigate(`/info-pessoa/${idPessoa}`)}>
                   <div>
                     <li><span>Nome:</span> {nome}</li>
                   </div>
@@ -56,9 +75,9 @@ function Pessoa({ pessoas, dispatch }) {
                 </div>
                 <div>
                   <button onClick={() => navegarFormEditPessoa(idPessoa)}>Editar</button>
-                  <button onClick={() => deletaPessoa(idPessoa)}>Excluir</button>
-                  <button>Criar Contato</button>
-                  <button>Criar Endereço</button>
+                  <button onClick={() => deletePessoa(idPessoa)}>Excluir</button>
+                  <button onClick={() => navegarFormContato(idPessoa)}>Criar Contato</button>
+                  <button onClick={() => navegarFormEndereco(idPessoa)}>Criar Endereço</button>
                 </div>
               </div>
             </S.Pessoas>
@@ -72,7 +91,8 @@ function Pessoa({ pessoas, dispatch }) {
 }
 const mapStateTopProps = state => ({
   pessoas: state.pessoasReducer.pessoas,
-  pessoa: state.pessoasReducer.pessoa
+  pessoa: state.pessoasReducer.pessoa,
+  loading: state.pessoasReducer.loading
 })
 
 export default connect(mapStateTopProps)(Pessoa)

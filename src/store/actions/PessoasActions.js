@@ -1,4 +1,4 @@
-import apiDbc from "../../api";
+import { apiDbc } from "../../api";
 
 export const getPessoas = async (dispatch) => {
     try {
@@ -15,7 +15,7 @@ export const getPessoas = async (dispatch) => {
 
 export const handleCreateUser = async (values, navigate) => {
     try {
-        await apiDbc.post('/pessoa', values);
+        await apiDbc.post('/pessoa', values);        
         navigate('/pessoa')
     } catch (error) {
         console.log(error);

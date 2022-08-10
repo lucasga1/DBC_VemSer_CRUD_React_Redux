@@ -11,9 +11,10 @@ function Login({ auth, dispatch }) {
   const navigate = useNavigate()
 
   const mudarParaCriarLogin = () => {
-    criarNovoLogin(navigate, dispatch)
+    criarNovoLogin(dispatch)
   }
 
+  
   const SignupSchema = Yup.object().shape({
     login: Yup.string()
       .required('Preenchimento Obrigatório'),

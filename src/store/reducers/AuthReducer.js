@@ -19,13 +19,34 @@ const authReducer = (state = INITIAL_STATE, action) => {
         }
     }
 
+    if (action.type === "SET_LOGOUT") {
+        return {
+            auth: {
+                ...state,
+                token: '',
+                isLogged: false,
+                isLoading: false,                
+            }
+        }
+    }
+
+    if (action.type === "LOADING_FALSE") {
+        return {
+            auth: {
+                ...state,
+                isLoading: false,
+                isLogin: true,                
+            }
+        }
+    }
+
     if (action.type === "SET_CRIA_LOGIN") {
         return {
             auth: {
                 token: '',
-                isLogged: action.isLogged,
-                isLoading: action.isLoading,
-                isLogin: action.isLogin
+                isLogged: false,
+                isLoading: false,
+                isLogin: false,
             }
         }
     }
