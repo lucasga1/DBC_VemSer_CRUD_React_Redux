@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { handleDelete, navegaEditEnd } from '../../../../store/actions/InfoPessoaActions'
+import { handleDelete, navegaEditEnd } from '../../../../store/actions/EnderecoActions'
 
 import * as s from './MapEndereco.styled'
 
-function MapEndereco({ idPessoa, enderecos, dispatch }) {
+function MapEndereco({ idPessoa, enderecos }) {
     
     const navigate = useNavigate();   
 
@@ -14,7 +14,7 @@ function MapEndereco({ idPessoa, enderecos, dispatch }) {
             <nav>
                 <ul>
                     {enderecos.map(({ tipo, logradouro, numero, complemento, cep, cidade, estado, pais, idEndereco }) => (
-                        <div>
+                        <div key={idEndereco}>
                             <div>
                                 <li><span>Tipo:</span>{tipo}</li>
                                 <li><span>Logradouro:</span>{logradouro}</li>
@@ -41,7 +41,7 @@ function MapEndereco({ idPessoa, enderecos, dispatch }) {
 
 
 const mapStateToProps = (state) => ({
-    enderecos: state.infoPessoaReducer.enderecos,
-    endereco: state.infoPessoaReducer.endereco
+    enderecos: state.enderecoReducer.enderecos,
+    endereco: state.enderecoReducer.endereco
 });
 export default connect(mapStateToProps)(MapEndereco);

@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import authReducer from "./AuthReducer";
 import pessoasReducer from "./PessoasReducer";
-import infoPessoaReducer from "./InfoPessoaReducer";
+import enderecoReducer from "./EnderecoReducer";
 
 export default combineReducers({
     authReducer,
     pessoasReducer,
-    infoPessoaReducer
+    enderecoReducer
 })

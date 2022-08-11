@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { Col, Row } from 'antd';
-import { getEnderecos } from "../../store/actions/InfoPessoaActions"
+import { getEnderecos } from "../../store/actions/EnderecoActions"
 import { useParams } from "react-router-dom"
 import { connect } from "react-redux"
 import MapEndereco from "./components/mapEndereco/MapEndereco";
@@ -33,7 +33,7 @@ function InfoPessoa({ enderecos, dispatch }) {
 }
 
 const mapStateToProps = (state) => ({
-  enderecos: state.infoPessoaReducer.enderecos,
-  endereco: state.infoPessoaReducer.endereco
+  enderecos: state.enderecoReducer.enderecos,
+  endereco: state.enderecoReducer.endereco
 });
 export default connect(mapStateToProps)(InfoPessoa)

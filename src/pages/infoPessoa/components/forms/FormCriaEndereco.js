@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
-import { getCep, handleCreateAddress, editEndereco, handleEditaEndereco } from '../../../../store/actions/InfoPessoaActions';
+import { getCep, handleCreateAddress, editEndereco, handleEditaEndereco } from '../../../../store/actions/EnderecoActions';
 import * as s from './Forms.styled';
 import { useParams } from 'react-router-dom';
 
@@ -160,10 +160,10 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
 }
 
 const mapStateToProps = state => ({
-    cep: state.infoPessoaReducer.cep,
-    loading: state.infoPessoaReducer.loading,
-    endereco: state.infoPessoaReducer.endereco,
-    isUpdateEnd: state.infoPessoaReducer.isUpdateEnd
+    cep: state.enderecoReducer.cep,
+    loading: state.enderecoReducer.loading,
+    endereco: state.enderecoReducer.endereco,
+    isUpdateEnd: state.enderecoReducer.isUpdateEnd
 });
 
 export default connect(mapStateToProps)(FormCriaEndereco)

@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     isUpdateEnd: true,
 }
 
-const infoPessoaReducer = (state = INITIAL_STATE, action) => {
+const enderecoReducer = (state = INITIAL_STATE, action) => {
     if (action.type === "SET_ENDERECOS_ID_PESSOA"){
         return {
             ...state,
@@ -58,4 +58,4 @@ const infoPessoaReducer = (state = INITIAL_STATE, action) => {
     return state;
 }
 
-export default infoPessoaReducer;
+export default enderecoReducer;
