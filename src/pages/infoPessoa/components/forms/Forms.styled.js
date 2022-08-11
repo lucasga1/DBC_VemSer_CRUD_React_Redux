@@ -30,7 +30,7 @@ export const Container = styled.div`
         }
         
         & input {
-            margin: 0 25px;
+            margin: 0 25px 10px 25px;
             padding-left: 15px;
             height: 35px;
             border:  1.5px solid #DFE0EB;
@@ -45,7 +45,7 @@ export const Container = styled.div`
         }
 
         & select {
-            margin: 0 25px;
+            margin: 0 25px 10px 25px;
             padding-left: 15px;
             height: 35px;
             border:  1.5px solid #DFE0EB;

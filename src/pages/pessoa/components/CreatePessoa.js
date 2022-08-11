@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from "react";
 import { connect } from 'react-redux'
 import * as s from './CreatePessoa.styled'
+import Loading from "../../../components/loading/Loading";
 
 function CreatePessoa({ pessoa, dispatch, loading, isUpdate }) {
 
@@ -26,7 +27,7 @@ function CreatePessoa({ pessoa, dispatch, loading, isUpdate }) {
     }, []);
 
     if (loading) {
-        return (<h1>Loading</h1>)
+        return (<Loading />)
     }
     return (
         <s.Container>

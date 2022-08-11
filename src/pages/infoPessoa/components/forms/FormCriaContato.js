@@ -2,11 +2,16 @@ import { Formik } from 'formik';
 import * as s from './Forms.styled';
 import { handleCreateContato } from '../../../../store/actions/ContatosActions';
 import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Loading from '../../../../components/loading/Loading';
 
-function FormCriaContato() {
+function FormCriaContato({ loading }) {
 
-  const { idPessoa } = useParams()
-  console.log(idPessoa)
+  const { idPessoa, nome } = useParams()
+
+  if (loading) {
+    return (<Loading />)
+  }
   return (
     <s.Container style={{ height: '100vh' }}>
       <h1>Formulário de contatos</h1>
@@ -23,25 +28,26 @@ function FormCriaContato() {
             tipoContato: values.tipo,
             telefone: values.telefone,
             descricao: values.descricao
-        }
-        console.log(contatoApi)
-          handleCreateContato(contatoApi, idPessoa)
+          }
+          console.log(contatoApi)
+          handleCreateContato(contatoApi, idPessoa, nome)
+          
         }}
       >
         {props => (
           <form onSubmit={props.handleSubmit}>
             <label htmlFor='tipo'>Tipo:</label>
             <select
-                name="tipo"
-                id="tipo"
-                type="select"
-                placeholder="Tipo"
-                onChange={props.handleChange}
-              >
-                <option value={props.tipoContato}></option>
-                <option value={props.tipoContato}>COMERCIAL</option>
-                <option value={props.tipoContato}>RESIDENCIAL</option>
-              </select>
+              name="tipo"
+              id="tipo"
+              type="select"
+              placeholder="Tipo"
+              onChange={props.handleChange}
+            >
+              <option value={props.tipoContato}></option>
+              <option value={props.tipoContato}>COMERCIAL</option>
+              <option value={props.tipoContato}>RESIDENCIAL</option>
+            </select>
             <br />
 
             <label htmlFor='telefone'>Telefone:</label>
@@ -73,6 +79,9 @@ function FormCriaContato() {
   )
 }
 
-export default FormCriaContato;
+const mapStateToProps = state => ({
+  loading: state.contatosReducer.loading,
+})
+export default connect(mapStateToProps)(FormCriaContato);
 
 

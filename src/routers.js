@@ -11,6 +11,7 @@ import InfoPessoa from './pages/infoPessoa/InfoPessoa';
 import FormCriaEndereco from './pages/infoPessoa/components/forms/FormCriaEndereco';
 import FormCriaContato from './pages/infoPessoa/components/forms/FormCriaContato';
 import NotFound from './pages/notfound/NotFound';
+import Loading from './components/loading/Loading';
 
 function Routers({ auth, dispatch }) {
 
@@ -36,13 +37,15 @@ function Routers({ auth, dispatch }) {
             <Route path='/login' element={<Login />} />
             <Route path='/criar-login' element={<Login />} />
           </>) : (<>
+            <Route path='/loading' element={<Loading />} />
             <Route path='/pessoa' element={<Pessoa />} />
             <Route path='/criar-pessoa' element={<CreatePessoa />} />
             <Route path='/editar-pessoa/:idPessoa' element={<CreatePessoa />} />
             <Route path='/info-pessoa/:idPessoa/:nome' element={<InfoPessoa />} />
-            <Route path='/criar-endereco/:idPessoa' element={<FormCriaEndereco />} />
+            <Route path='/criar-endereco/:idPessoa/:nome' element={<FormCriaEndereco />} />
             <Route path='/editar-endereco/:idEndereco/:idPessoa' element={<FormCriaEndereco />} />
-            <Route path='/criar-contato/:idPessoa' element={<FormCriaContato />} />
+            <Route path='/criar-contato/:idPessoa/:nome' element={<FormCriaContato />} />
+            <Route path='/editar-contato/:idContato/:idPessoa' element={<FormCriaContato />} />
           </>)
         }
         <Route path='*' element={<NotFound />} />

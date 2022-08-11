@@ -29,10 +29,10 @@ export const getCep = async (cep, dispatch) => {
     }
 }
 
-export const handleCreateAddress = async (values, id) => {
+export const handleCreateAddress = async (values, id, nome) => {
     try {
         await apiDbc.post(`/endereco/{idPessoa}?idPessoa=${id}`, values)
-        window.location.href = `/info-pessoa/${id}`
+        window.location.href = `/info-pessoa/${id}/${nome}`
     } catch (error) {
         console.log(error)
     }
@@ -46,10 +46,10 @@ export const handleDelete = async (idEndereco) => {
     }
 };
 
-export const handleEditaEndereco = async (IdEndereco, values, idPessoa) => {
+export const handleEditaEndereco = async (IdEndereco, values, idPessoa, nome) => {
     try {
         await apiDbc.put(`/endereco/${IdEndereco}`, values )
-        window.location.href = `/info-pessoa/${idPessoa}`
+        window.location.href = `/info-pessoa/${idPessoa}/${nome}`
     } catch (error) {
         console.log(error)
     }

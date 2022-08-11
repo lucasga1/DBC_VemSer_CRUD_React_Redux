@@ -4,28 +4,32 @@ import { useEffect } from 'react';
 import { getCep, handleCreateAddress, editEndereco, handleEditaEndereco } from '../../../../store/actions/EnderecoActions';
 import * as s from './Forms.styled';
 import { useParams } from 'react-router-dom';
+import Loading from '../../../../components/loading/Loading';
+import MaskedInput from "react-text-mask";
+import { maskCep } from "../../../../consts";
 
 function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
 
-    const { idEndereco, idPessoa } = useParams()
+    const { idEndereco, idPessoa, nome } = useParams()
     console.log(idPessoa)
+
     useEffect(() => {
-        return()=>{
-          dispatch({type: 'LIMPA_ENDERECO'})
+        return () => {
+            dispatch({ type: 'LIMPA_ENDERECO' })
         }
-      }, [])
+    }, [])
 
     useEffect(() => {
         if (idEndereco) {
             editEndereco(idEndereco, dispatch)
-        }  
-        else {
-            dispatch({type: 'REGISTER_ENDERECO'})
         }
-    }, []);    
+        else {
+            dispatch({ type: 'REGISTER_ENDERECO' })
+        }
+    }, []);
 
-    if(loading) {
-        return (<h1>Carregando</h1>)
+    if (loading) {
+        return (<Loading />)
     }
 
     return (
@@ -55,23 +59,23 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
                         estado: cep.uf,
                         pais: values.pais
                     }
-                    isUpdateEnd ? handleEditaEndereco(idEndereco, enviaApi, idPessoa) : handleCreateAddress(enviaApi, idPessoa)
+                    isUpdateEnd ? handleEditaEndereco(idEndereco, enviaApi, idPessoa, nome) : handleCreateAddress(enviaApi, idPessoa, nome)
                 }}
             >
                 {props => (
                     <form onSubmit={props.handleSubmit}>
-                        <label htmlFor='cep'>CEP:</label>
-                        <input
-                            name='cep'
-                            type='text'
-                            placeholder='Digite o cep'
-                            onChange={props.handleChange}
+                        <label htmlFor='cep'>CEP*:</label>
+                        <MaskedInput
+                            mask={maskCep}
+                            id="cep"
+                            name="cep"
+                            type="text"
+                            placeholder="CEP"
                             onBlur={() => getCep(props.values.cep, dispatch)}
+                            onChange={props.handleChange}
                             value={props.values.cep}
                         />
-                        <br />
-
-                        <label htmlFor='logradouro'>Logradouro:</label>
+                        <label htmlFor='logradouro'>Logradouro*:</label>
                         <input
                             name='logradouro'
                             type='text'
@@ -79,9 +83,6 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
                             onChange={props.handleChange}
                             value={cep.logradouro}
                         />
-                        <br />
-
-
                         <label htmlFor='bairro'>Bairro:</label>
                         <input
                             name='bairro'
@@ -89,9 +90,7 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
                             placeholder='Digite o bairro'
                             value={cep.bairro}
                         />
-                        <br />
-
-                        <label htmlFor='cidade'>Cidade:</label>
+                        <label htmlFor='cidade'>Cidade*:</label>
                         <input
                             name='cidade'
                             type='text'
@@ -99,9 +98,7 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
                             onChange={props.handleChange}
                             value={cep.localidade}
                         />
-                        <br />
-
-                        <label htmlFor='estado'>Estado:</label>
+                        <label htmlFor='estado'>Estado*:</label>
                         <input
                             name='estado'
                             type='text'
@@ -109,9 +106,7 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
                             onChange={props.handleChange}
                             value={cep.uf}
                         />
-                        <br />
-
-                        <label htmlFor='pais'>Pais:</label>
+                        <label htmlFor='pais'>Pais*:</label>
                         <input
                             name='pais'
                             type='text'
@@ -119,9 +114,19 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
                             onChange={props.handleChange}
                             value={props.values.pais}
                         />
-                        <br />
-
-                        <label htmlFor='numero'>Número:</label>
+                        <label htmlFor='tipo'>Tipo*:</label>
+                        <select
+                            name="tipo"
+                            id="tipo"
+                            type="select"
+                            placeholder="Tipo"
+                            onChange={props.handleChange}
+                        >
+                            <option value={props.tipoContato}></option>
+                            <option value={props.tipoContato}>COMERCIAL</option>
+                            <option value={props.tipoContato}>RESIDENCIAL</option>
+                        </select>
+                        <label htmlFor='numero'>Número*:</label>
                         <input
                             name='numero'
                             type='text'
@@ -129,8 +134,6 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
                             onChange={props.handleChange}
                             value={props.values.numero}
                         />
-                        <br />
-
                         <label htmlFor='complemento'>Complemento:</label>
                         <input
                             name='complemento'
@@ -139,18 +142,6 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
                             onChange={props.handleChange}
                             value={props.values.complemento}
                         />
-                        <br />
-
-                        <label htmlFor='tipo'>Tipo:</label>
-                        <input
-                            name='tipo'
-                            type='text'
-                            placeholder='Digite o tipo'
-                            onChange={props.handleChange}
-                            value={props.values.tipo}
-                        />
-                        <br />
-                        <br />
                         <button type='submit'>{isUpdateEnd ? 'Atualizar endereco' : 'Cadastrar endereço'}</button>
                     </form>
                 )}

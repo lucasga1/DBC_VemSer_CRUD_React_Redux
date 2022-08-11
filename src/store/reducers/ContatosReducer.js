@@ -1,6 +1,8 @@
 const INITIAL_STATE = {
     contatos: [],
-    contato: {}
+    contato: {},
+    loading: false,
+    isUpdateCont: true
 }
 
 const contatosReducer = (state = INITIAL_STATE, action) => {
@@ -8,6 +10,15 @@ const contatosReducer = (state = INITIAL_STATE, action) => {
         return {
             ...state,
             contatos: action.contatos
+        }
+    }
+
+    if(action.type === "SET_CONTATOS_BY_ID"){
+        return {
+            ...state,
+            contato:{},
+            loading: false,
+            isUpdateCont: true
         }
     }
     return state

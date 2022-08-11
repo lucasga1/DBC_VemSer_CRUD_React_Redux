@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import moment from "moment";
 import * as S from "./Pessoa.styled";
+import Loading from "../../components/loading/Loading";
 
 function Pessoa({ pessoas, dispatch, loading }) {
 
@@ -36,16 +37,16 @@ function Pessoa({ pessoas, dispatch, loading }) {
     navigate(`/criar-pessoa`);
   }
   
-  const navegarFormContato = (idPessoa) => {
-    navigate(`/criar-contato/${idPessoa}`)
+  const navegarFormContato = (idPessoa, nome) => {
+    navigate(`/criar-contato/${idPessoa}/${nome}`)
   }
 
-  const navegarFormEndereco = (idPessoa) => {
-    navigate(`/criar-endereco/${idPessoa}`)
+  const navegarFormEndereco = (idPessoa, nome) => {
+    navigate(`/criar-endereco/${idPessoa}/${nome}`)
   }
 
   if (loading) {
-    return (<h1>Loading</h1>)
+    return (<Loading />)
   }
 
   return (
@@ -76,8 +77,8 @@ function Pessoa({ pessoas, dispatch, loading }) {
                 <div>
                   <button onClick={() => navegarFormEditPessoa(idPessoa)}>Editar</button>
                   <button onClick={() => deletePessoa(idPessoa)}>Excluir</button>
-                  <button onClick={() => navegarFormContato(idPessoa)}>Criar Contato</button>
-                  <button onClick={() => navegarFormEndereco(idPessoa)}>Criar Endereço</button>
+                  <button onClick={() => navegarFormContato(idPessoa, nome)}>Criar Contato</button>
+                  <button onClick={() => navegarFormEndereco(idPessoa, nome)}>Criar Endereço</button>
                 </div>
               </div>
             </S.Pessoas>
