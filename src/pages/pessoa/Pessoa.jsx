@@ -75,7 +75,7 @@ function Pessoa({ pessoas, dispatch, loading }) {
                   </div>
                 </div>
                 <div>
-                  <button onClick={() => navegarFormEditPessoa(idPessoa)}>Editar</button>
+                  <button onClick={() => navegarFormEditPessoa(idPessoa)}>Atualizar</button>
                   <button onClick={() => deletePessoa(idPessoa)}>Excluir</button>
                   <button onClick={() => navegarFormContato(idPessoa, nome)}>Criar Contato</button>
                   <button onClick={() => navegarFormEndereco(idPessoa, nome)}>Criar Endereço</button>

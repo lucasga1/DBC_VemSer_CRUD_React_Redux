@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import Loading from '../../../../components/loading/Loading';
 import MaskedInput from "react-text-mask";
 import { maskCep } from "../../../../consts";
+import { Toaster } from 'react-hot-toast';
 
 function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
 
@@ -143,6 +144,7 @@ function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
                             value={props.values.complemento}
                         />
                         <button type='submit'>{isUpdateEnd ? 'Atualizar endereco' : 'Cadastrar endereço'}</button>
+                        <Toaster />
                     </form>
                 )}
             </Formik>

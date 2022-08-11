@@ -2,27 +2,31 @@ import { handleCreateUser, handleEditPessoa, editPessoa } from "../../../store/a
 import { Formik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from "react";
-import { connect } from 'react-redux'
-import * as s from './CreatePessoa.styled'
+import { connect } from 'react-redux';
+import * as s from './CreatePessoa.styled';
 import Loading from "../../../components/loading/Loading";
+import { maskCpf, maskDate } from '../../../consts';
+import moment from "moment";
+import MaskedInput from 'react-text-mask';
+import { Toaster } from 'react-hot-toast';
 
 function CreatePessoa({ pessoa, dispatch, loading, isUpdate }) {
 
     const { idPessoa } = useParams()
     const navigate = useNavigate()
-    
+
     useEffect(() => {
-        return()=>{
-          dispatch({type: 'LIMPA_PESSOA'})
+        return () => {
+            dispatch({ type: 'LIMPA_PESSOA' })
         }
-      }, [])
+    }, [])
 
     useEffect(() => {
         if (idPessoa) {
             editPessoa(idPessoa, dispatch)
-        }  
+        }
         else {
-            dispatch({type: 'REGISTER_PESSOA'})
+            dispatch({ type: 'REGISTER_PESSOA' })
         }
     }, []);
 
@@ -34,12 +38,18 @@ function CreatePessoa({ pessoa, dispatch, loading, isUpdate }) {
             <Formik
                 initialValues={{
                     nome: pessoa ? pessoa.nome : '',
-                    dataNascimento: pessoa ? pessoa.dataNascimento : '',
+                    dataNascimento: pessoa ? moment(pessoa.dataNascimento, 'YYYY-MM-DD').format('DD/MM/YYYY') : '',
                     cpf: pessoa ? pessoa.cpf : '',
                     email: pessoa ? pessoa.email : '',
                 }}
                 onSubmit={values => {
-                    isUpdate ? handleEditPessoa(values, idPessoa, navigate) : handleCreateUser(values, navigate)
+                    const newValues = {
+                        nome: values.nome,
+                        dataNascimento: moment(values.dataNascimento, 'DD/MM/YYYY').format('YYYY-MM-DD'),
+                        cpf: values.cpf.replace(/[^0-9]/gi, ''),
+                        email: values.email
+                    }
+                    isUpdate ? handleEditPessoa(newValues, idPessoa, navigate) : handleCreateUser(newValues, navigate)
                 }}
             >
                 {props => (
@@ -53,25 +63,26 @@ function CreatePessoa({ pessoa, dispatch, loading, isUpdate }) {
                             onChange={props.handleChange}
                             value={props.values.nome}
                         />
-                        <br />
                         <label htmlFor="dataNascimento">Data de nascimento:</label>
-                        <input
+                        <MaskedInput
+                            mask={maskDate}
                             name="dataNascimento"
                             type="text"
-                            placeholder="Digite sua data de nascimento"
-                            onChange={props.handleChange}
+                            placeholder='Digite sua data de nascimento'
                             value={props.values.dataNascimento}
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
                         />
-                        <br />
                         <label htmlFor="cpf">CPF:</label>
-                        <input
+                        <MaskedInput
+                            mask={maskCpf}
                             name="cpf"
                             type="text"
-                            placeholder="Digite seu cpf"
-                            onChange={props.handleChange}
+                            placeholder='Digite seu CPF'
                             value={props.values.cpf}
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
                         />
-                        <br />
                         <label htmlFor="email">E-mail:</label>
                         <input
                             name="email"
@@ -80,9 +91,8 @@ function CreatePessoa({ pessoa, dispatch, loading, isUpdate }) {
                             onChange={props.handleChange}
                             value={props.values.email}
                         />
-                        <br />
                         <button type="submit">{isUpdate ? 'Atualizar' : 'Cadastrar'}</button>
-
+                        <Toaster />
                     </form>
                 )}
             </Formik>

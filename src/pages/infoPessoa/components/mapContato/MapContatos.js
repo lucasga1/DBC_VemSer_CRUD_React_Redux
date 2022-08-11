@@ -1,12 +1,8 @@
 import { connect } from "react-redux";
 import { Container } from "./MapContatos.styled";
-import { handleDelete, navegaEditContato } from "../../../../store/actions/ContatosActions";
-import { useParams, useNavigate } from "react-router-dom";
+import { handleDelete } from "../../../../store/actions/ContatosActions";
 
 function MapContatos({ contatos }) {
-  const navigate = useNavigate()
-
-  const { idPessoa, nome } = useParams() 
 
   return (
     <Container>
@@ -17,8 +13,8 @@ function MapContatos({ contatos }) {
             {contatos.map(({ idContato, telefone, tipoContato, descricao }) =>
               <div key={idContato}>
                 <div>
-                  <li><span>Telefone:</span>{telefone}</li>
                   <li><span>Tipo de Contato:</span>{tipoContato}</li>
+                  <li><span>Telefone:</span>{telefone}</li>
                   <li><span>Descrição:</span>{descricao}</li>
                 </div>
                 <div>

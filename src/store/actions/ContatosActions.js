@@ -1,5 +1,21 @@
-import { Navigate } from "react-router-dom";
 import { apiDbc } from "../../api";
+import toast from 'react-hot-toast';
+//toastr/////////////////////////////////////////////////////////////
+const notifyPositive = (value) => toast(value, {
+    position: 'top-right',
+    style: {
+        backgroundColor: '	#7CFC00',
+        color: '#000'
+    },
+});
+const notifyError = (value) => toast(value, {
+    position: 'top-right',
+    style: {
+        backgroundColor: '#FF0000',
+        color: '#fff'
+    },
+});
+//////////////////////////////////////////////////////////////////////
 
 export const getContatos = async (idPessoa, dispatch) => {
     try {
@@ -17,9 +33,13 @@ export const getContatos = async (idPessoa, dispatch) => {
 export const handleCreateContato = async (values, idPessoa, nome) => {
     try {
         await apiDbc.post(`/contato/${idPessoa}`, values)
-        window.location.href = `/info-pessoa/${idPessoa}/${nome}`
+        notifyPositive('Contato criado com sucesso!')
+        setTimeout(() => {
+            window.location.href = `/info-pessoa/${idPessoa}/${nome}`
+        }, 1500)
     } catch (error) {
         console.log(error)
+        notifyError('Falha ao criar contato.')
     }
 }
 
@@ -29,26 +49,4 @@ export const handleDelete = async (idContato) => {
     } catch (error) {
         console.log(error)
     }
-}   
-
-/* export const handleEditContato = async (idContato, idPessoa, nome) => {
-    try {
-        await apiDbc.put(`/contato/${idContato}`)
-        window.location.href = `/info-pessoa/${idPessoa}/${nome}`
-    } catch (error) {
-        console.log(error)
-    }
 }
-
-export const navegaEditContato = (idContato, idPessoa, navigate) => {
-    navigate(`/editar-contato/${idContato}/${idPessoa}`)
-}
-
-export const editContato = async (idPessoa, dispatch) => {
-    try {
-        const {data} = await apiDbc.get(`/contato/${idPessoa}`)
-        console.log(data)
-    } catch (error) {
-        console.log(error)
-    }
-} */

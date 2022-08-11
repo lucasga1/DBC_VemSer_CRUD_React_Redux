@@ -1,6 +1,23 @@
 import { connect } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { apiDbc, apiCep } from "../../api";
+import toast from 'react-hot-toast';
+
+//toastr/////////////////////////////////////////////////////////////
+const notifyPositive = (value) => toast(value, {
+    position: 'top-right',
+    style: {
+        backgroundColor: '	#7CFC00',
+        color: '#000'
+    },
+});
+const notifyError = (value) => toast(value, {
+    position: 'top-right',
+    style: {
+        backgroundColor: '#FF0000',
+        color: '#fff'
+    },
+});
+//////////////////////////////////////////////////////////////////////
 
 export const getEnderecos = async (idPessoa, dispatch) => {
     try {
@@ -32,9 +49,13 @@ export const getCep = async (cep, dispatch) => {
 export const handleCreateAddress = async (values, id, nome) => {
     try {
         await apiDbc.post(`/endereco/{idPessoa}?idPessoa=${id}`, values)
-        window.location.href = `/info-pessoa/${id}/${nome}`
+        notifyPositive('Endereço criado com sucesso!')
+        setTimeout(() => {
+            window.location.href = `/info-pessoa/${id}/${nome}`
+        }, 1500)
     } catch (error) {
         console.log(error)
+        notifyError('Falha ao criar endereço, tente novamente')
     }
 }
 
@@ -49,9 +70,13 @@ export const handleDelete = async (idEndereco) => {
 export const handleEditaEndereco = async (IdEndereco, values, idPessoa, nome) => {
     try {
         await apiDbc.put(`/endereco/${IdEndereco}`, values )
-        window.location.href = `/info-pessoa/${idPessoa}/${nome}`
+        notifyPositive('Endereço atualizado com sucesso!')
+        setTimeout(() => {
+            window.location.href = `/info-pessoa/${idPessoa}/${nome}`
+        }, 1500)
     } catch (error) {
         console.log(error)
+        notifyError('Falha ao atualizar endereço, tente novamente')
     }
 }
 

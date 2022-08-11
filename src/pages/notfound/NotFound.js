@@ -1,6 +1,14 @@
+import { Body, Div } from './NotFound.styled'
+import notfound from './images/notfound.png'
+
 function NotFound() {
+
   return (
-    <div>NotFound</div>
+    <Body>
+      <Div>
+        <img src={notfound} alt="" />       
+      </Div>
+    </Body>
   )
 }
 export default NotFound

@@ -25,19 +25,17 @@ function Routers({ auth, dispatch }) {
   }, [])
 
   if (auth.isLoading) {
-    return (<h1>Carregando</h1>)
+    return (<Loading />)
   }
   return (
     <BrowserRouter>
-      <Headers />
+      {!auth.isLogged ? '' : <Headers />}
       <Routes>
         {!auth.isLogged
           ? (<>
-            <Route path='/' element={<Dashboard />} />
             <Route path='/login' element={<Login />} />
             <Route path='/criar-login' element={<Login />} />
           </>) : (<>
-            <Route path='/loading' element={<Loading />} />
             <Route path='/pessoa' element={<Pessoa />} />
             <Route path='/criar-pessoa' element={<CreatePessoa />} />
             <Route path='/editar-pessoa/:idPessoa' element={<CreatePessoa />} />

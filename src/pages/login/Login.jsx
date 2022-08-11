@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Field, Formik } from "formik";
 import { FaEarlybirds } from "react-icons/fa";
 import { Inputs, Title, Subscribe, Logo, Dashboard, SubscribeDash, Container, Div, Link, SpanSignup, SpanForgot, Errors, BgBody } from "./Login.styled";
+import { Toaster } from 'react-hot-toast';
 import * as Yup from 'yup';
 
 function Login({ auth, dispatch }) {
@@ -14,7 +15,6 @@ function Login({ auth, dispatch }) {
     criarNovoLogin(dispatch)
   }
 
-  
   const SignupSchema = Yup.object().shape({
     login: Yup.string()
       .required('Preenchimento Obrigatório'),
@@ -61,6 +61,7 @@ function Login({ auth, dispatch }) {
                   </Errors>
                 </Inputs>
                 <button type="submit" width="380" style={{ cursor: 'pointer' }}>{auth.isLogin ? 'Login' : 'Criar novo login'}</button>
+                <Toaster />
               </Form>
             )}
           </Formik>

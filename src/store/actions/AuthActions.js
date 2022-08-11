@@ -1,18 +1,38 @@
 import { connect } from 'react-redux';
 import { apiDbc } from '../../api';
-
+import toast from 'react-hot-toast';
+//toastr/////////////////////////////////////////////////////////////
+const notifyPositive = (value) => toast(value, {
+    position: 'top-right',
+    style: {
+        backgroundColor: '	#7CFC00',
+        color: '#000'
+    },
+});
+const notifyError = (value) => toast(value, {
+    position: 'top-right',
+    style: {
+        backgroundColor: '#FF0000',
+        color: '#fff'
+    },
+});
+//////////////////////////////////////////////////////////////////////
 export const handleLogin = async (values, dispatch) => {
     try {
         const { data } = await apiDbc.post('/auth', values)
-        localStorage.setItem('token', data)
-        const logar = {
-            type: 'SET_LOGADO',
-            token: data
-        }
-        dispatch(logar)
-        window.location.href = '/pessoa';
+        notifyPositive('Login efetuado com sucesso!')
+        setTimeout(() => {
+            localStorage.setItem('token', data)
+            const logar = {
+                type: 'SET_LOGADO',
+                token: data
+            }
+            dispatch(logar)
+            window.location.href = '/pessoa';
+        }, 1500)
     } catch (error) {
         console.log(error)
+        notifyError('Usuário ou senha inválido.')
     }
 }
 
@@ -40,7 +60,7 @@ export const criarNovoLogin = (dispatch) => {
         type: "SET_CRIA_LOGIN",
     }
     dispatch(criarLogin)
-    window.location.href = '/criar-login';
+    window.location.href = `/criar-login`;
 }
 
 export const isAuth = (dispatch) => {

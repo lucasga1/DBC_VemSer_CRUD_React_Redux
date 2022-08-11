@@ -1,4 +1,22 @@
 import { apiDbc } from "../../api";
+import toast from 'react-hot-toast';
+
+//toastr/////////////////////////////////////////////////////////////
+const notifyPositive = (value) => toast(value, {
+    position: 'top-right',
+    style: {
+        backgroundColor: '	#7CFC00',
+        color: '#000'
+    },
+});
+const notifyError = (value) => toast(value, {
+    position: 'top-right',
+    style: {
+        backgroundColor: '#FF0000',
+        color: '#fff'
+    },
+});
+//////////////////////////////////////////////////////////////////////
 
 export const getPessoas = async (dispatch) => {
     try {
@@ -15,10 +33,14 @@ export const getPessoas = async (dispatch) => {
 
 export const handleCreateUser = async (values, navigate) => {
     try {
-        await apiDbc.post('/pessoa', values);        
-        navigate('/pessoa')
+        await apiDbc.post('/pessoa', values);
+        notifyPositive('Usuário criado com sucesso!')
+        setTimeout(() => {
+            navigate('/pessoa')
+        }, 1500)
     } catch (error) {
         console.log(error);
+        notifyError('Falha ao cadastrar, tente novamente.')
     }
 };
 
@@ -33,9 +55,13 @@ export const handleDelete = async (idPessoa) => {
 export const handleEditPessoa = async (values, idPessoa, navigate) => {
     try {
         await apiDbc.put(`/pessoa/${idPessoa}`, values)
-        navigate('/pessoa')
+        notifyPositive('Usuário atualizado com sucesso!')
+        setTimeout(() => {
+            navigate('/pessoa')
+        }, 1500)
     } catch (error) {
         console.log(error)
+        notifyError('Falha ao atualizar, tente novamente.')
     }
 }
 

@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import { Col, Row } from 'antd';
 import { getEnderecos } from "../../store/actions/EnderecoActions";
 import { getContatos } from "../../store/actions/ContatosActions";
 import { useParams } from "react-router-dom";
@@ -8,7 +7,8 @@ import MapEndereco from "./components/mapEndereco/MapEndereco";
 import MapContatos from "./components/mapContato/MapContatos";
 import { Container } from "./InfoPessoa.styled"
 
-function InfoPessoa({ enderecos, dispatch }) {
+function InfoPessoa({ dispatch }) {
+  
   const { idPessoa, nome } = useParams()
 
   useEffect(() => {

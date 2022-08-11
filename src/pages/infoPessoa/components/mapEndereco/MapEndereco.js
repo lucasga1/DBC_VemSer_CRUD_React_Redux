@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { handleDelete, navegaEditEnd } from '../../../../store/actions/EnderecoActions'
+import { handleDelete, navegaEditEnd } from '../../../../store/actions/EnderecoActions';
 
 import * as s from './MapEndereco.styled'
 
 function MapEndereco({ idPessoa, enderecos }) {
-    
-    const navigate = useNavigate();   
+
+    const navigate = useNavigate();
 
     return (
         <s.Container>
@@ -23,7 +23,9 @@ function MapEndereco({ idPessoa, enderecos }) {
                             </div>
                             <div>
                                 <li><span>Cidade:</span>{cidade}</li>
-                                <li><span>CEP:</span>{cep}</li>
+                                <li><span>CEP:</span>{cep.replace(/\D/g, '')
+                                    .replace(/(\d{5})(\d)/, '$1-$2')
+                                    .replace(/(-\d{3})\d+?$/, '$1')}</li>
                                 <li><span>Estado:</span>{estado}</li>
                                 <li><span>País:</span>{pais}</li>
                             </div>
