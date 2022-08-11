@@ -33,7 +33,7 @@ function Routers({ auth, dispatch }) {
       <Routes>
         {!auth.isLogged
           ? (<>
-            <Route path='/login' element={<Login />} />
+            <Route path='/' element={<Login />} />
             <Route path='/criar-login' element={<Login />} />
           </>) : (<>
             <Route path='/pessoa' element={<Pessoa />} />

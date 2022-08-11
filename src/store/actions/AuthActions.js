@@ -43,7 +43,7 @@ export const handleLogout = (dispatch) => {
         type: 'SET_LOGOUT'
     }
     dispatch(logout)
-    window.location.href = '/login';
+    window.location.href = '/';
 }
 
 export const handleCreateUser = async (value) => {
