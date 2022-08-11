@@ -91,7 +91,7 @@ function CreatePessoa({ pessoa, dispatch, loading, isUpdate }) {
                             onChange={props.handleChange}
                             value={props.values.email}
                         />
-                        <button type="submit">{isUpdate ? 'Atualizar' : 'Cadastrar'}</button>
+                        <button type="submit">{isUpdate ? 'Atualizar usuário' : 'Cadastrar usuário'}</button>
                         <Toaster />
                     </form>
                 )}

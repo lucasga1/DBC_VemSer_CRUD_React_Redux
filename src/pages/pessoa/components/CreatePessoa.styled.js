@@ -25,7 +25,7 @@ export const Container = styled.div`
         }
         
         & input {
-            margin: 0 25px 5px 25px;
+            margin: 0 25px 15px 25px;
             padding-left: 15px;
             height: 35px;
             border:  1.5px solid #DFE0EB;
@@ -43,10 +43,11 @@ export const Container = styled.div`
         background-color: #3751FF;
         color: #ffffff;
         font-size: 16px;
-        margin: 0 25px;
+        margin: 15px 25px 0 25px;
         padding: 7px 10px;
         border: none;
         border-radius: 8px;
+        cursor: pointer;
     }
     }
 `;

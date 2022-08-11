@@ -55,5 +55,6 @@ export const Container = styled.div`
         padding: 7px 10px;
         border: none;
         border-radius: 8px;
+        cursor: pointer;
     }
 `;

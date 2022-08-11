@@ -26,6 +26,7 @@ export const DivH1 = styled.div`
         border-radius: 8px;
         box-shadow: 5px 5px 5px 0px #d6d6d637,
         5px 5px 5px 0px #cccccc52;
+        cursor: pointer;
     }
 `; 
 
@@ -111,6 +112,7 @@ export const Pessoas = styled.div`
         padding: 5px 10px;
         border: none;
         border-radius: 8px;
+        cursor: pointer;
     }
 
 `;

@@ -44,7 +44,6 @@ function FormCriaContato({ loading }) {
               name="tipo"
               id="tipo"
               type="select"
-              placeholder="Tipo"
               onChange={props.handleChange}
             >
               <option value={props.tipoContato}></option>
@@ -59,6 +58,7 @@ function FormCriaContato({ loading }) {
               name="telefone"
               id="telefone"
               type="text"
+              placeholder='Digite seu número'
               onChange={props.handleChange}
               value={props.telefone}
             />
@@ -69,13 +69,13 @@ function FormCriaContato({ loading }) {
             <input
               name='descricao'
               type='text'
-              placeholder='Digite o descricao'
+              placeholder='Digite a descrição do contato'
               onChange={props.handleChange}
               value={props.values.descricao}
             />
             <br />
             <br />
-            <button type='submit'>Cadastrar contatos</button>
+            <button type='submit'>Cadastrar contato</button>
             <Toaster />
           </form>
         )}
