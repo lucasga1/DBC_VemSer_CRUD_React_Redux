@@ -2,7 +2,8 @@ const INITIAL_STATE = {
     enderecos: [],
     loading: false,
     endereco: {},
-    cep: {}
+    cep: {},
+    isUpdateEnd: true,
 }
 
 const infoPessoaReducer = (state = INITIAL_STATE, action) => {
@@ -12,12 +13,21 @@ const infoPessoaReducer = (state = INITIAL_STATE, action) => {
             enderecos: action.enderecos
         }
     }
+
+    if (action.type === "SET_ENDERECO_ID_END"){
+        return {
+            ...state,
+            endereco: action.endereco,
+            loading: false,
+            isUpdateEnd: true
+        }
+    }
     
     if (action.type === "SET_CEP") {
         return {
             ...state,
             cep: action.cep,
-            loading: true
+            loading: false
         }
     }
 
@@ -27,6 +37,24 @@ const infoPessoaReducer = (state = INITIAL_STATE, action) => {
             loading: true
         }
     }
+
+    if (action.type === "REGISTER_ENDERECO"){
+        return {
+            ...state,
+            endereco: {},
+            loading: false,
+            isUpdateEnd: false,
+        }
+    }
+
+    if (action.type === "LIMPA_ENDERECO"){
+        return {
+            ...state,
+            endereco: {},
+            loading: true,
+        }
+    }
+
     return state;
 }
 

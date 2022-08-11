@@ -1,33 +1,33 @@
-import { useEffect } from "react"
+import React, { useEffect } from "react"
+import { Col, Row } from 'antd';
 import { getEnderecos } from "../../store/actions/InfoPessoaActions"
 import { useParams } from "react-router-dom"
 import { connect } from "react-redux"
+import MapEndereco from "./components/mapEndereco/MapEndereco";
 
 function InfoPessoa({ enderecos, dispatch }) {
-  console.log(enderecos)
   const { idPessoa } = useParams()
-  console.log(idPessoa)
 
   useEffect(() => {
     getEnderecos(idPessoa, dispatch)
   }, [])
 
+  useEffect(() => {
+    return()=>{
+      dispatch({type: 'LIMPA_ENDERECO'})
+    }
+  }, [])
+
   return (
     <div>
-      {enderecos.map(({ tipo, logradouro, numero, complemento, cep, cidade, estado, pais, idEndereco }) => (
-        <>
-          <div>{tipo}</div>
-          <div>{logradouro}</div>
-          <div>{numero}</div>
-          <div>{complemento}</div>
-          <div>{cidade}</div>
-          <div>{cep}</div>
-          <div>{estado}</div>
-          <div>{pais}</div>
-          <div>{idEndereco}</div>
-          <br />
-        </>
-      ))}
+      <Row>
+        <Col span={18} push={6} style={{ backgroundColor: 'blue' }}>
+          Coluna Contatos
+        </Col>
+        <Col span={6} pull={18}>
+          <MapEndereco idPessoa={idPessoa}/>
+        </Col>
+      </Row>
     </div>
   )
 }
@@ -36,6 +36,4 @@ const mapStateToProps = (state) => ({
   enderecos: state.infoPessoaReducer.enderecos,
   endereco: state.infoPessoaReducer.endereco
 });
-
-
 export default connect(mapStateToProps)(InfoPessoa)

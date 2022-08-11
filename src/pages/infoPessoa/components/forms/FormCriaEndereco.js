@@ -1,32 +1,61 @@
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
-import { getCep } from '../../../store/actions/InfoPessoaActions';
-import handleCreateAddress from '../../../store/actions/InfoPessoaActions'
+import { useEffect } from 'react';
+import { getCep, handleCreateAddress, editEndereco, handleEditaEndereco } from '../../../../store/actions/InfoPessoaActions';
 import * as s from './Forms.styled';
 import { useParams } from 'react-router-dom';
 
-function FormCriaEndereco({ cep, loading, dispatch }) {
+function FormCriaEndereco({ isUpdateEnd, endereco, cep, loading, dispatch }) {
 
-    const { idPessoa, idEndereco } = useParams()
-    
+    const { idEndereco, idPessoa } = useParams()
+    console.log(idPessoa)
+    useEffect(() => {
+        return()=>{
+          dispatch({type: 'LIMPA_ENDERECO'})
+        }
+      }, [])
+
+    useEffect(() => {
+        if (idEndereco) {
+            editEndereco(idEndereco, dispatch)
+        }  
+        else {
+            dispatch({type: 'REGISTER_ENDERECO'})
+        }
+    }, []);    
+
+    if(loading) {
+        return (<h1>Carregando</h1>)
+    }
+
     return (
         <s.Container>
             <h1>Formulário de endereços</h1>
             <Formik
                 initialValues={{
-                    tipo: '',
-                    logradouro: cep.logradouro,
-                    numero: '',
-                    complemento: '',
-                    cep: '',
-                    cidade: cep.localidade,
-                    estado: cep.uf,
-                    pais: ''
+                    tipo: endereco ? endereco.tipo : '',
+                    logradouro: endereco ? endereco.logradouro : '',
+                    bairro: endereco ? endereco.bairro : '',
+                    numero: endereco ? endereco.numero : '',
+                    complemento: endereco ? endereco.complemento : '',
+                    cep: endereco ? endereco.cep : '',
+                    cidade: endereco ? endereco.cidade : '',
+                    estado: endereco ? endereco.estado : '',
+                    pais: endereco ? endereco.pais : ''
                 }}
                 onSubmit={values => {
-                    console.log(values)
-                    console.log(idPessoa)
-                    handleCreateAddress(values, idPessoa)
+                    const enviaApi = {
+                        idPessoa: parseInt(idPessoa),
+                        tipo: values.tipo.toUpperCase(),
+                        logradouro: cep.logradouro,
+                        numero: values.numero,
+                        complemento: values.complemento,
+                        cep: values.cep.replace(/[^0-9]/gi, ''),
+                        cidade: cep.localidade,
+                        estado: cep.uf,
+                        pais: values.pais
+                    }
+                    isUpdateEnd ? handleEditaEndereco(idEndereco, enviaApi, idPessoa) : handleCreateAddress(enviaApi, idPessoa)
                 }}
             >
                 {props => (
@@ -122,7 +151,7 @@ function FormCriaEndereco({ cep, loading, dispatch }) {
                         />
                         <br />
                         <br />
-                        <button type='submit'>Cadastrar endereço</button>
+                        <button type='submit'>{isUpdateEnd ? 'Atualizar endereco' : 'Cadastrar endereço'}</button>
                     </form>
                 )}
             </Formik>
@@ -132,7 +161,9 @@ function FormCriaEndereco({ cep, loading, dispatch }) {
 
 const mapStateToProps = state => ({
     cep: state.infoPessoaReducer.cep,
-    loading: state.infoPessoaReducer.loading
+    loading: state.infoPessoaReducer.loading,
+    endereco: state.infoPessoaReducer.endereco,
+    isUpdateEnd: state.infoPessoaReducer.isUpdateEnd
 });
 
 export default connect(mapStateToProps)(FormCriaEndereco)

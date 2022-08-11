@@ -8,8 +8,8 @@ import Login from './pages/login/Login';
 import CreatePessoa from './pages/pessoa/components/CreatePessoa';
 import Pessoa from './pages/pessoa/Pessoa';
 import InfoPessoa from './pages/infoPessoa/InfoPessoa';
-import FormCriaEndereco from './pages/infoPessoa/components/FormCriaEndereco';
-import FormCriaContato from './pages/infoPessoa/components/FormCriaContato';
+import FormCriaEndereco from './pages/infoPessoa/components/forms/FormCriaEndereco';
+import FormCriaContato from './pages/infoPessoa/components/forms/FormCriaContato';
 import NotFound from './pages/notfound/NotFound';
 
 function Routers({ auth, dispatch }) {
@@ -41,7 +41,7 @@ function Routers({ auth, dispatch }) {
             <Route path='/editar-pessoa/:idPessoa' element={<CreatePessoa />} />
             <Route path='/info-pessoa/:idPessoa' element={<InfoPessoa />} />
             <Route path='/criar-endereco/:idPessoa' element={<FormCriaEndereco />} />
-            <Route path='/editar-endereco/:idPessoa/:idEndereco' element={<FormCriaEndereco />} />
+            <Route path='/editar-endereco/:idEndereco/:idPessoa' element={<FormCriaEndereco />} />
             <Route path='/criar-contato/:id' element={<FormCriaContato />} />
           </>)
         }

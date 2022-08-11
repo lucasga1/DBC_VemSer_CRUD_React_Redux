@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import { apiDbc, apiCep} from "../../api";
+import { Navigate } from "react-router-dom";
+import { apiDbc, apiCep } from "../../api";
 
 export const getEnderecos = async (idPessoa, dispatch) => {
-    console.log(idPessoa)
     try {
         const { data } = await apiDbc.get(`/endereco/retorna-por-id-pessoa?idPessoa=${idPessoa}`)
         const enderecos = {
@@ -29,10 +29,44 @@ export const getCep = async (cep, dispatch) => {
     }
 }
 
-const handleCreateAddress = async (values, id) => {
+export const handleCreateAddress = async (values, id) => {
     try {
         await apiDbc.post(`/endereco/{idPessoa}?idPessoa=${id}`, values)
-        window.location.href = `/pessoas`
+        window.location.href = `/info-pessoa/${id}`
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const handleDelete = async (idEndereco) => {
+    try {
+        await apiDbc.delete(`/endereco/${idEndereco}`)
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const handleEditaEndereco = async (IdEndereco, values, idPessoa) => {
+    try {
+        await apiDbc.put(`/endereco/${IdEndereco}`, values )
+        window.location.href = `/info-pessoa/${idPessoa}`
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const navegaEditEnd = (idEndereco, idPessoa, navigate) => {
+    navigate(`/editar-endereco/${idEndereco}/${idPessoa}`)
+}   
+
+export const editEndereco = async (idPessoa, dispatch) => {
+    try {
+        const { data } = await apiDbc.get(`/endereco/${idPessoa}`)
+        const endereco = {
+            type: "SET_ENDERECO_ID_END",
+            endereco: data
+        }
+        dispatch(endereco)
     } catch (error) {
         console.log(error)
     }

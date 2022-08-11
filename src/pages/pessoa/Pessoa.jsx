@@ -39,7 +39,7 @@ function Pessoa({ pessoas, dispatch, loading }) {
   const navegarFormContato = (idPessoa) => {
     navigate(`/criar-contato/${idPessoa}`)
   }
-  
+
   const navegarFormEndereco = (idPessoa) => {
     navigate(`/criar-endereco/${idPessoa}`)
   }
