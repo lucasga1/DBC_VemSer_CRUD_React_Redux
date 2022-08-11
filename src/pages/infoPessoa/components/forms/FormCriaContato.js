@@ -1,10 +1,14 @@
 import { Formik } from 'formik';
 import * as s from './Forms.styled';
+import { handleCreateContato } from '../../../../store/actions/ContatosActions';
+import { useParams } from 'react-router-dom';
 
 function FormCriaContato() {
 
+  const { idPessoa } = useParams()
+  console.log(idPessoa)
   return (
-    <s.Container style={{height: '100vh'}}>
+    <s.Container style={{ height: '100vh' }}>
       <h1>Formulário de contatos</h1>
       <Formik
         initialValues={{
@@ -14,22 +18,30 @@ function FormCriaContato() {
           descricao: '',
         }}
         onSubmit={values => {
-          console.log(values)
+          const contatoApi = {
+            idPessoa: parseInt(idPessoa),
+            tipoContato: values.tipo,
+            telefone: values.telefone,
+            descricao: values.descricao
+        }
+        console.log(contatoApi)
+          handleCreateContato(contatoApi, idPessoa)
         }}
       >
         {props => (
           <form onSubmit={props.handleSubmit}>
             <label htmlFor='tipo'>Tipo:</label>
             <select
-              name="tipoContato"
-              id="tipoContato"
-              type="text"
-              onChange={props.values.handleChange}
-            >
-              <option value={props.values.tipoContato}></option>
-              <option value={props.values.tipoContato}>COMERCIAL</option>
-              <option value={props.values.tipoContato}>RESIDENCIAL</option>
-            </select>
+                name="tipo"
+                id="tipo"
+                type="select"
+                placeholder="Tipo"
+                onChange={props.handleChange}
+              >
+                <option value={props.tipoContato}></option>
+                <option value={props.tipoContato}>COMERCIAL</option>
+                <option value={props.tipoContato}>RESIDENCIAL</option>
+              </select>
             <br />
 
             <label htmlFor='telefone'>Telefone:</label>
@@ -48,6 +60,7 @@ function FormCriaContato() {
               name='descricao'
               type='text'
               placeholder='Digite o descricao'
+              onChange={props.handleChange}
               value={props.values.descricao}
             />
             <br />

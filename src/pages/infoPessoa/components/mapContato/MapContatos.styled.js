@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    width: 920px;
+    width: 380px;
     margin: 10px auto;
     padding: 20px;
     border: 1px solid #DFE0EB;
@@ -14,14 +14,11 @@ export const Container = styled.div`
         font-size: 24px;
         margin-bottom: 10px;
     }
-
+    
     & nav ul {
         display: grid;
         
         &>div {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             padding: 0 8px;
             margin-bottom: 10px;
             border: 1px solid #DFE0EB;
@@ -29,12 +26,14 @@ export const Container = styled.div`
             box-shadow: 5px 5px 5px 0px #d6d6d675,
                 5px 5px 5px 0px #cccccc;
         }
+
         &>div>div{
-            padding: 8px;
+            padding: 8px 8px 0 8px;
         }
         
         &>div>div:last-child{
             display: grid;
+            grid-template-columns: auto auto;
         }
     }
 
@@ -52,7 +51,7 @@ export const Container = styled.div`
         background-color: #3751FF;
         color: #ffffff;
         font-size: 16px;
-        margin: 5px;
+        margin: 0 5px 8px 5px;
         padding: 7px 10px;
         border: none;
         border-radius: 8px;

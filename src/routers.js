@@ -39,10 +39,10 @@ function Routers({ auth, dispatch }) {
             <Route path='/pessoa' element={<Pessoa />} />
             <Route path='/criar-pessoa' element={<CreatePessoa />} />
             <Route path='/editar-pessoa/:idPessoa' element={<CreatePessoa />} />
-            <Route path='/info-pessoa/:idPessoa' element={<InfoPessoa />} />
+            <Route path='/info-pessoa/:idPessoa/:nome' element={<InfoPessoa />} />
             <Route path='/criar-endereco/:idPessoa' element={<FormCriaEndereco />} />
             <Route path='/editar-endereco/:idEndereco/:idPessoa' element={<FormCriaEndereco />} />
-            <Route path='/criar-contato/:id' element={<FormCriaContato />} />
+            <Route path='/criar-contato/:idPessoa' element={<FormCriaContato />} />
           </>)
         }
         <Route path='*' element={<NotFound />} />

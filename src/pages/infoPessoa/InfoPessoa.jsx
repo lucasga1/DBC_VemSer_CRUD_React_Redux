@@ -1,34 +1,46 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { Col, Row } from 'antd';
-import { getEnderecos } from "../../store/actions/EnderecoActions"
-import { useParams } from "react-router-dom"
-import { connect } from "react-redux"
+import { getEnderecos } from "../../store/actions/EnderecoActions";
+import { getContatos } from "../../store/actions/ContatosActions";
+import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
 import MapEndereco from "./components/mapEndereco/MapEndereco";
+import MapContatos from "./components/mapContato/MapContatos";
+import { Container } from "./InfoPessoa.styled"
 
 function InfoPessoa({ enderecos, dispatch }) {
-  const { idPessoa } = useParams()
+  const { idPessoa, nome } = useParams()
 
   useEffect(() => {
     getEnderecos(idPessoa, dispatch)
+    getContatos(idPessoa, dispatch)
   }, [])
 
   useEffect(() => {
-    return()=>{
-      dispatch({type: 'LIMPA_ENDERECO'})
+    return () => {
+      dispatch({ type: 'LIMPA_ENDERECO' })
     }
   }, [])
 
   return (
-    <div>
-      <Row>
-        <Col span={18} push={6} style={{ backgroundColor: 'blue' }}>
-          Coluna Contatos
-        </Col>
-        <Col span={6} pull={18}>
-          <MapEndereco idPessoa={idPessoa}/>
-        </Col>
-      </Row>
-    </div>
+    <>
+      <h1 
+      style={
+        {
+          fontSize: '24px',
+          textAlign: 'center',
+          margin: '15px 0',
+        }}
+      >{`Informações de ${nome}`}</h1>
+      <Container>
+        <div span={18} push={6}>
+          <MapContatos />
+        </div>
+        <div span={6} pull={18}>
+          <MapEndereco idPessoa={idPessoa} />
+        </div>
+      </Container>
+    </>
   )
 }
 

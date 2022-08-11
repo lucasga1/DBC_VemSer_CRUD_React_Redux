@@ -59,7 +59,7 @@ function Pessoa({ pessoas, dispatch, loading }) {
           {pessoas.map(({ nome, dataNascimento, cpf, email, idPessoa }) => (
             <S.Pessoas key={idPessoa}>
               <div>
-                <div onClick={() => navigate(`/info-pessoa/${idPessoa}`)}>
+                <div onClick={() => navigate(`/info-pessoa/${idPessoa}/${nome}`)}>
                   <div>
                     <li><span>Nome:</span> {nome}</li>
                   </div>
